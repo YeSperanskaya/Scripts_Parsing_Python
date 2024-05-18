@@ -77,7 +77,7 @@ def get_news():
     soup = BeautifulSoup(response.content, 'html.parser', from_encoding='Windows-1251')
 
     # Извлечение заголовков статей
-    headlines = soup.title.string
+    headlines = soup.find_all('h3')
     #print(headlines)
 
     # Извлечение аннотаций статей
@@ -90,7 +90,7 @@ def get_news():
     filtered_articles = []
     for headline, annotation, author in zip(headlines, annotations, authors):
         #if 'republican' in headline.text or 'democratic' in headline.text:
-        if 'Jersey' in headline.text:
+        if 'a' in headline:
             filtered_articles.append({
                 'title': headline.text,
                 'annotation': annotation.text,
