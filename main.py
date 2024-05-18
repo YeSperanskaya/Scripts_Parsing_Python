@@ -17,6 +17,7 @@
 # https://www.crummy.com/software/BeautifulSoup/bs4/doc/
 # https://docs-python.ru/packages/modul-user-agents-python/
 # https://habr.com/ru/companies/selectel/articles/754674/
+# https://skillbox.ru/media/code/parsing-sayta-vmeste-s-python-i-bibliotekoy-beautiful-soup-prostaya-instruktsiya-v-tri-shaga/
 
 # импортируем модуль
 import requests
@@ -32,19 +33,30 @@ headers = {
    "User-Agent": st_useragent
 }
 
-# отправляем запрос с заголовками по нужному адресу
-req = requests.get("https://www.google.com/search?gs_ssp=eJzj4tVP1zc0LEq3tCg0zq5QYDRgdGDw4kpPTc1OKkrMzCsGAIbWCRE&q=geekbrains&oq=&gs_lcrp=EgZjaHJvbWUqDwgCEC4YJxjHARjqAhjRAzIPCAAQLhgnGMcBGOoCGNEDMgkIARAjGCcY6gIyDwgCEC4YJxjHARjqAhjRAzIJCAMQIxgnGOoCMgkIBBAjGCcY6gIyCQgFECMYJxjqAjIJCAYQIxgnGOoCMgkIBxAjGCcY6gLSAQkxNTE3ajBqMTWoAgiwAgE&sourceid=chrome&ie=UTF-8", headers)
-# считываем текст HTML-документа
-src = req.text
-#print(src)
+t = True
+a = 0
+while (t == True):
+   # отправляем запрос с заголовками по нужному адресу
+   req = requests.get("https://edition.cnn.com/", headers)
+   # считываем текст HTML-документа
+   src = req.text
+   #print(src)
 
 
-# инициализируем html-код страницы
-soup = BeautifulSoup(src, 'lxml')
-# считываем заголовок страницы
-title = soup.title.string
-print(title)
-# Программа выведет: Курсы - Блог компании Селектел
+   # инициализируем html-код страницы
+   soup = BeautifulSoup(src, 'lxml')
+   # считываем заголовок страницы
+   title = soup.title.string
+   if "void" in soup:
+      print(title)
+   a += 1
+   if a == 25:
+      t = False
+   # else:
+   #    print("не нашел")
+   # Программа выведет: Курсы - Блог компании Селектел
 
-
+   # надо устанавливать определнное время запуска
+   # нудо устанавливать поисковик
+   # надо установить запись в файл
 
