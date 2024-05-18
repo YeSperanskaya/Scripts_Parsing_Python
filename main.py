@@ -62,22 +62,23 @@
 
 
 import requests
+import json
 from bs4 import BeautifulSoup
+
+# URL веб-страницы новостного агентства
 
 
 def get_news():
-    # URL веб-страницы новостного агентства
-    url = 'https://ngzt.ru/novosti-rossii/'
-
+    url = 'https://www.independent.co.uk/topic/republicans/'
+    headers = {'User-Agent': 'Mozilla/5.0'}
     # Отправка запроса к веб-странице
-    response = requests.get(url)
-
+    response = requests.get(url, headers=headers, allow_redirects=True)
     # Анализ HTML-кода страницы
-    soup = BeautifulSoup(response.content, 'html.parser')
+    soup = BeautifulSoup(response.content, 'html.parser', from_encoding='Windows-1251')
 
     # Извлечение заголовков статей
-    headlines = soup.find_all('h4')
-    print(headlines)
+    headlines = soup.title.string
+    #print(headlines)
 
     # Извлечение аннотаций статей
     annotations = soup.find_all('p')
@@ -88,8 +89,8 @@ def get_news():
 # Фильтрация статей по содержанию
     filtered_articles = []
     for headline, annotation, author in zip(headlines, annotations, authors):
-        #if 'republican party' in headline.text or 'democratic party' in headline.text:
-        if 'село' in headline.text:
+        #if 'republican' in headline.text or 'democratic' in headline.text:
+        if 'Jersey' in headline.text:
             filtered_articles.append({
                 'title': headline.text,
                 'annotation': annotation.text,
@@ -109,15 +110,19 @@ def log_in_file(text):
     # открываем файл для проверки
     with open('example.txt', 'r') as file:
         content = file.read()
+        # # Преобразуем словарь в строку
+        string_text = json.dumps(text)
+        # for i in text:
+        #     text[i] = str(text[i])
         # превращаю list в строку
-        str_text = ', '.join(text)
-    if str_text in content:
+        #str_text = ', '.join(text)
+    if string_text in content:
         file.close()
     else:
     # Открываем файл для записи
         with open('example.txt', 'a') as file:
         # Записываем текст в файл
-            file.write(str_text + '\n')
+            file.write(string_text + '\n')
         # Закрываем файл
             file.close()
 
@@ -131,7 +136,7 @@ with open('example.txt', 'w') as file:
 while (res == True):
     log_in_file(get_news())
     count += 1
-    if count == 25:
+    if count == 2:
         res = False
 
 
