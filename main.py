@@ -12,13 +12,11 @@
 (если за 4 часа не нашлось - выбирайте другое новостное агенство)
 Возможно предоставление решения в виде публичной песочницы, например на https://repl.it
 """
-# найти лог-файл
-# функция чтения лог-файла
-# black и white листы
 
-# 4 признака и сравнивать
-#
-#
+# полезные ссылки
+# https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+# https://docs-python.ru/packages/modul-user-agents-python/
+# https://habr.com/ru/companies/selectel/articles/754674/
 
 # импортируем модуль
 import requests
@@ -35,7 +33,7 @@ headers = {
 }
 
 # отправляем запрос с заголовками по нужному адресу
-req = requests.get("https://docs-python.ru/packages/modul-user-agents-python/", headers)
+req = requests.get("https://www.google.com/search?gs_ssp=eJzj4tVP1zc0LEq3tCg0zq5QYDRgdGDw4kpPTc1OKkrMzCsGAIbWCRE&q=geekbrains&oq=&gs_lcrp=EgZjaHJvbWUqDwgCEC4YJxjHARjqAhjRAzIPCAAQLhgnGMcBGOoCGNEDMgkIARAjGCcY6gIyDwgCEC4YJxjHARjqAhjRAzIJCAMQIxgnGOoCMgkIBBAjGCcY6gIyCQgFECMYJxjqAjIJCAYQIxgnGOoCMgkIBxAjGCcY6gLSAQkxNTE3ajBqMTWoAgiwAgE&sourceid=chrome&ie=UTF-8", headers)
 # считываем текст HTML-документа
 src = req.text
 #print(src)
