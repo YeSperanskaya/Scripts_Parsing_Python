@@ -35,10 +35,10 @@ headers = {
 }
 
 # отправляем запрос с заголовками по нужному адресу
-req = requests.get("https://selectel.ru/blog/courses/", headers)
+req = requests.get("https://docs-python.ru/packages/modul-user-agents-python/", headers)
 # считываем текст HTML-документа
 src = req.text
-print(src)
+#print(src)
 
 
 # инициализируем html-код страницы
@@ -48,29 +48,5 @@ title = soup.title.string
 print(title)
 # Программа выведет: Курсы - Блог компании Селектел
 
-"""
-from selenium import webdriver as wd
-from bs4 import BeautifulSoup
 
-browser = wd.Chrome("/usr/bin/chromedriver/")
-
-# регистрируем кнопку "Поиск" и имитируем нажатие
-open_search = browser.find_element_by_class_name("header_search")
-open_search.click()
-# регистрируем текстовое поле и имитируем ввод строки "Git"
-search = browser.find_element_by_class_name("search-modal_input")
-search.send_keys("Git")
-
-
-
-# ставим на паузу, чтобы страница прогрузилась
-time.sleep(3)
-# загружаем страницу и извлекаем ссылки через атрибут rel
-soup = BeautifulSoup(browser.page_source, 'lxml')
-all_publications = \
-   soup.find_all('a', {'rel': 'noreferrer noopener'})[1:5]
-# форматируем результат
-for article in all_publications:
-   print(article['href'])
-"""
 
