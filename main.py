@@ -121,6 +121,7 @@ def log_in_file(text):
 
     # превращаю list в строку
         if str_in_text in str_in_file:
+            print("похожий текст найден")
             file.close()
         else:
             file.close()
@@ -130,6 +131,7 @@ def log_in_file(text):
                 file.write(str_in_text)
             # Закрываем файл
                 file.close()
+                print("текст успешно записан")
 
 res = True
 count = 0
