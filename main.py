@@ -71,7 +71,7 @@ from bs4 import BeautifulSoup
 Эта функция содержит в себе адрес ссылки, проверяет ее на наличие ключевого слова и возвращает словарь
 '''
 def get_news():
-    url = 'https://ngzt.ru/'
+    url = 'https://edition.cnn.com/'
     headers = {'User-Agent': 'Mozilla/5.0'}
     # Отправка запроса к веб-странице
     response = requests.get(url, headers=headers, allow_redirects=True)
@@ -79,7 +79,7 @@ def get_news():
     soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
 
     # Извлечение заголовков статей
-    headlines = soup.find_all('h3')
+    headlines = soup.find_all('span')
     print(headlines)
 
     # Извлечение аннотаций статей
@@ -92,7 +92,7 @@ def get_news():
     filtered_articles = []
     for headline, annotation, author in zip(headlines, annotations, authors):
         #if 'republican' in headline.text or 'democratic' in headline.text:
-        if 'Екатеринбург' in headline.text:
+        if 'CNN' in headline.text or 'CNN' in annotation.text:
             filtered_articles.append({
                 'title': headline.text,
                 'annotation': annotation.text,
@@ -134,7 +134,7 @@ def log_in_file(text):
 res = True
 count = 0
 
-# Создаем новый файл
+# Создаю новый файл
 with open('example.txt', 'w', encoding='utf-8') as file:
     file.close()
 
