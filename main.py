@@ -67,18 +67,23 @@ from bs4 import BeautifulSoup
 
 # URL веб-страницы новостного агентства
 
+'''
+Эта функция содержит в себе адрес ссылки, проверяет ее на наличие ключевого слова и возвращает словарь
+'''
+
+
 
 def get_news():
-    url = 'https://www.independent.co.uk/topic/republicans/'
+    url = 'https://ngzt.ru/'
     headers = {'User-Agent': 'Mozilla/5.0'}
     # Отправка запроса к веб-странице
     response = requests.get(url, headers=headers, allow_redirects=True)
     # Анализ HTML-кода страницы
-    soup = BeautifulSoup(response.content, 'html.parser', from_encoding='Windows-1251')
+    soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
 
     # Извлечение заголовков статей
     headlines = soup.find_all('h3')
-    #print(headlines)
+    print(headlines)
 
     # Извлечение аннотаций статей
     annotations = soup.find_all('p')
@@ -90,12 +95,13 @@ def get_news():
     filtered_articles = []
     for headline, annotation, author in zip(headlines, annotations, authors):
         #if 'republican' in headline.text or 'democratic' in headline.text:
-        if 'a' in headline:
+        if 'Екатеринбург' in headline.text:
             filtered_articles.append({
                 'title': headline.text,
                 'annotation': annotation.text,
                 'author': author.text
             })
+    print("прошла функция get_news()")
     return filtered_articles
 
 # проверка наличия текста в лог-файле
@@ -108,40 +114,39 @@ def get_news():
 # функция, которая записывает данные с сайта
 def log_in_file(text):
     # открываем файл для проверки
-    with open('example.txt', 'r') as file:
+    with open('example.txt', 'r', encoding='utf-8') as file:
         content = file.read()
-        # # Преобразуем словарь в строку
-        string_text = json.dumps(text)
-        # for i in text:
-        #     text[i] = str(text[i])
-        # превращаю list в строку
+        # # Преобразую словарь в строку
+        str_in_file = json.dumps(content)
+        print(str_in_file)
+        str_in_text = json.dumps(text)
+        print(str_in_text)
+
+    # превращаю list в строку
         #str_text = ', '.join(text)
-    if string_text in content:
-        file.close()
-    else:
-    # Открываем файл для записи
-        with open('example.txt', 'a') as file:
-        # Записываем текст в файл
-            file.write(string_text + '\n')
-        # Закрываем файл
+        if str_in_text in str_in_file:
             file.close()
+        else:
+            file.close()
+        # Открываем файл для записи
+            with open('example.txt', 'a', encoding='utf-8') as file:
+            # Записываем текст в файл
+                file.write(str_in_text + '\n')
+            # Закрываем файл
+                file.close()
 
 res = True
 count = 0
 
 # Создаем новый файл
-with open('example.txt', 'w') as file:
+with open('example.txt', 'w', encoding='utf-8') as file:
     file.close()
 
 while (res == True):
     log_in_file(get_news())
     count += 1
-    if count == 2:
+    if count == 3:
         res = False
 
 
-
-
-# if __name__ == 'USA':
-#     print(get_news())
 
