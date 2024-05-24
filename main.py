@@ -70,9 +70,6 @@ from bs4 import BeautifulSoup
 '''
 Эта функция содержит в себе адрес ссылки, проверяет ее на наличие ключевого слова и возвращает словарь
 '''
-
-
-
 def get_news():
     url = 'https://ngzt.ru/'
     headers = {'User-Agent': 'Mozilla/5.0'}
@@ -116,14 +113,13 @@ def log_in_file(text):
     # открываем файл для проверки
     with open('example.txt', 'r', encoding='utf-8') as file:
         content = file.read()
-        # # Преобразую словарь в строку
+        # Преобразую словарь в строку
         str_in_file = json.dumps(content)
         print(str_in_file)
         str_in_text = json.dumps(text)
         print(str_in_text)
 
     # превращаю list в строку
-        #str_text = ', '.join(text)
         if str_in_text in str_in_file:
             file.close()
         else:
@@ -131,7 +127,7 @@ def log_in_file(text):
         # Открываем файл для записи
             with open('example.txt', 'a', encoding='utf-8') as file:
             # Записываем текст в файл
-                file.write(str_in_text + '\n')
+                file.write(str_in_text)
             # Закрываем файл
                 file.close()
 
