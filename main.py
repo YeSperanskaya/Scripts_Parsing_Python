@@ -118,9 +118,9 @@ def get_news():
 
 
 # функция, которая записывает данные с сайта
-def log_in_file(text):
+def log_in_file(name_file, text):
     # открываем файл для проверки
-    with open('example.txt', 'r', encoding='utf-8') as file:
+    with open(name_file, 'r', encoding='utf-8') as file:
         content = file.read()
         # Преобразую словарь в строку
         str_in_file = json.dumps(content)
@@ -135,7 +135,7 @@ def log_in_file(text):
         else:
             file.close()
         # Открываем файл для записи
-            with open('example.txt', 'a', encoding='utf-8') as file:
+            with open(name_file, 'a', encoding='utf-8') as file:
             # Записываем текст в файл
                 file.write(str_in_text)
             # Закрываем файл
@@ -144,18 +144,20 @@ def log_in_file(text):
 
 
 
+#пишу имя файла в которое будет скопированы данные по новостям
+name_of_file = 'CNN_25-05-2024.txt'
 
 # Создаю новый файл
-with open('example.txt', 'w', encoding='utf-8') as file:
+with open(name_of_file, 'w', encoding='utf-8') as file:
     file.close()
 
 res = True
-delay_time = 600
+delay_time = 60
 count = 0
 while (res == True):
-    log_in_file(get_news())
+    log_in_file(name_of_file, get_news())
     count += 1
-    if count == 240:
+    if count == 2400:
         res = False
     else:
         time.sleep(delay_time)
