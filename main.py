@@ -64,6 +64,9 @@
 import requests
 import json
 from bs4 import BeautifulSoup
+import time
+
+from pip._internal.utils import datetime
 
 # URL веб-страницы новостного агентства
 
@@ -92,7 +95,8 @@ def get_news():
     filtered_articles = []
     for headline, annotation, author in zip(headlines, annotations, authors):
         #if 'republican' in headline.text or 'democratic' in headline.text:
-        if 'CNN' in headline.text or 'CNN' in annotation.text:
+        #if 'CNN' in annotation.text or 'republ' in annotation.text:
+        if 'democr' in annotation.text or 'republ' in annotation.text or 'democr' in headline.text or 'republ' in headline.text:
             filtered_articles.append({
                 'title': headline.text,
                 'annotation': annotation.text,
@@ -101,12 +105,17 @@ def get_news():
     print("прошла функция get_news()")
     return filtered_articles
 
-# проверка наличия текста в лог-файле
-# def text_in_file(text, file):
-#     if text in file:
-#         return True
-#     else:
-#         False
+
+# #функция, которая создает новое название для файла
+# def create_file(file_name):
+#     cur_time = datetime.datetime.now()
+#     filename_full = file_name + "_" + cur_time.strftime(
+#         '%Y-%m-%d_%H-%M-%S')
+#     fd = open(filename_full, 'w', encoding='utf-8')
+#     fd.write(
+#         f"{cur_time.strftime('%Y-%m-%d %H:%M:%S')}: Script started\n")
+#     fd.close()
+
 
 # функция, которая записывает данные с сайта
 def log_in_file(text):
@@ -133,18 +142,23 @@ def log_in_file(text):
                 file.close()
                 print("текст успешно записан")
 
-res = True
-count = 0
+
+
 
 # Создаю новый файл
 with open('example.txt', 'w', encoding='utf-8') as file:
     file.close()
 
+res = True
+delay_time = 600
+count = 0
 while (res == True):
     log_in_file(get_news())
     count += 1
-    if count == 3:
+    if count == 240:
         res = False
+    else:
+        time.sleep(delay_time)
 
 
 
