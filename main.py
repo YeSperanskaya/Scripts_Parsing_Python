@@ -95,7 +95,7 @@ def get_news():
     filtered_articles = []
     for headline, annotation, author in zip(headlines, annotations, authors):
         #if 'republican' in headline.text or 'democratic' in headline.text:
-        if 'Israel' in headline.text or 'Israel' in annotation.text:
+        if 'the' in headline.text or 'the' in annotation.text:
         #if 'democr' in annotation.text or 'republ' in annotation.text or 'democr' in headline.text or 'republ' in headline.text:
             filtered_articles.append({
                 'title': headline.text,
