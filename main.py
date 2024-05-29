@@ -9,11 +9,15 @@ class File_log():
     # переменная класса File_log обозначающая имя файла
     name_file = ""
 
-    # функция создающая лог-файл (открывает и закрывает его)
+    '''
+    функция создающая лог-файл (открывает и закрывает его)
+    '''
+
     def __init__(self, name_file):
         self.name_file = name_file
-        function_create = open(name_file, "x")
+        function_create = open(name_file, "w")
         function_create.close()
+
 
     '''
     функция возвращающая название имени файла
@@ -21,19 +25,39 @@ class File_log():
     def get_name_file(self):
         return self.name_file
 
-
-
+    '''
+    функция записи в файл
+    '''
     def write_text_in_file(self, text):
-        self.name_file = open(self, "a")
-        self.name_file.write(text + '\n')
-        self.name_file.close()
-        return self.name_file
+        write_in_file = open(self.name_file, "a")
+        write_in_file.write(text + '\n')
+        write_in_file.close()
+        print("записала в файл")
+
+
+    '''
+    функция чтения из файла
+    '''
+    def read_from_file(self):
+        f = open(self.name_file, 'r')
+        info_in_file = f.read()
+        f.close()
+        print(info_in_file)
+        return info_in_file
+
+    '''
+    функция проверки текста уже в файле
+    '''
+    #def examination_text_is_exist(self, text):
 
 
 
-def start():
-    name_file = "CNN"
-    my_file = File_log.__init__(File_log, "CNN.txt")
-    File_log.write_text_in_file(my_file, "rsdrfsfsefsefsef")
 
-start()
+def start(name_file):
+    File_log.__init__(File_log, name_file)
+    File_log.get_name_file(File_log)
+    File_log.write_text_in_file(File_log, "gfdgdgdfgdfgdfg")
+    File_log.read_from_file(File_log)
+
+
+start("CNN.txt")
