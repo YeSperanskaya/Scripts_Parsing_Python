@@ -48,16 +48,23 @@ class File_log():
     '''
     функция проверки текста уже в файле
     '''
-    #def examination_text_is_exist(self, text):
+    def examination_text_is_exist(self, text):
+        text_in_file = self.read_from_file()
+        if text in text_in_file:
+            print("текст уже есть в файле")
+            return True
 
 
 
 
 def start(name_file):
     File_log.__init__(File_log, name_file)
+def working(name_file):
     File_log.get_name_file(File_log)
     File_log.write_text_in_file(File_log, "gfdgdgdfgdfgdfg")
     File_log.read_from_file(File_log)
 
 
-start("CNN.txt")
+name_file = "CNN.txt"
+start(name_file)
+working(name_file)
