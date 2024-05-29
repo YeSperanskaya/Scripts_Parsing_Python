@@ -6,8 +6,9 @@
 выводить нужно новости содержащие упоминания Республиканской и Демократической партий США.
 '''
 class File_log():
-    def create_file(self, name_file):
-        new_file = open(name_file, "x")
-        new_file.close()
 
+    def __init__(self, name_file):
+        self.new_file = open(name_file, "x")
+        self.new_file.close()
 
+my_file = File_log.__init__(File_log, "test.txt")
