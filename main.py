@@ -29,10 +29,14 @@ class File_log():
     функция записи в файл
     '''
     def write_text_in_file(self, text):
-        write_in_file = open(self.name_file, "a")
-        write_in_file.write(text + '\n')
-        write_in_file.close()
-        print("записала в файл")
+        is_exist = self.examination_text_is_exist(self, text)
+        if is_exist == True:
+            print("текст уже есть в файле")
+        else:
+            write_in_file = open(self.name_file, "a")
+            write_in_file.write(text + '\n')
+            write_in_file.close()
+            print("записала в файл")
 
 
     '''
@@ -49,10 +53,12 @@ class File_log():
     функция проверки текста уже в файле
     '''
     def examination_text_is_exist(self, text):
-        text_in_file = self.read_from_file()
+        text_in_file = self.read_from_file(self)
         if text in text_in_file:
-            print("текст уже есть в файле")
             return True
+        else:
+            print("новая информация")
+            return False
 
 
 
@@ -67,4 +73,5 @@ def working(name_file):
 
 name_file = "CNN.txt"
 start(name_file)
+working(name_file)
 working(name_file)
