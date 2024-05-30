@@ -77,15 +77,46 @@ class File_log():
 функция описывающая характеристики сайта
 
 функция вытягивающая информацию с сайта
+"""
 
 
 
-
+"""
 класс самой записи в виде словаря имеющая определенные характеристики
 заголовок, аннотация, автор 
 функция печатать саму запись в удобоваримом формате туСтринг
 и уже её переводить и проверять
 """
+class Text_of_news():
+    heading = ''
+    annotation = ''
+    author = ''
+
+    """
+    функции устанвливающие новые данные заголовка, аннотации статьи, автора
+    """
+
+    def set_heading(self, new_heading):
+        self.heading = str("Heading: " + new_heading)
+
+    def set_annotation(self, new_annotation):
+        self.annotation = str("Annotation: " + new_annotation)
+
+    def set_author(self, new_author):
+        self.author = str("Author: " + new_author)
+
+
+    """
+    функции возвращающие данные заголовка, аннотации статьи, автора
+    """
+    def get_heading(self):
+        return self.heading
+
+    def get_annotation(self):
+        return self.annotation
+    def get_author(self):
+        return self.author
+
 
 
 
