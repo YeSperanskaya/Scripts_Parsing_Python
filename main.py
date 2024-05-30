@@ -13,6 +13,10 @@
 Возможно предоставление решения в виде публичной песочницы, например на https://repl.it
 """
 
+
+import requests
+from bs4 import BeautifulSoup
+
 class File_log():
     # переменная класса File_log обозначающая имя файла
     name_file = ""
@@ -79,6 +83,49 @@ class File_log():
 функция вытягивающая информацию с сайта
 """
 
+class Parsing_of_site():
+#     функция описывающая сам сайт
+    def work_with_site(self):
+        url = "https://edition.cnn.com/politics/"
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        print(soup.title.text)
+        print(soup.find_all('span', 'container__headline-text'))
+        print(soup.find('span', 'container__headline-text'))
+
+#     ищу в заголовках, если нахожу нужные упоминания перейти по ссылке открыть страницу и отуда вернуть аннотацию,
+# заголовок и автора и записать
+
+'''
+Чтобы нажать на ссылку при нахождении нужного текста в Python с использованием Selenium, вам нужно выполнить следующие шаги:
+Открыть URL: Сначала откройте целевой URL, где находится нужный текст и ссылка. Это можно сделать с помощью метода driver.get().
+Найти элемент: Используйте метод find_element() для поиска элемента, содержащего нужный текст. Например, если это 
+текст внутри тега <p>, вы можете использовать следующий код:
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+driver = webdriver.Chrome()
+driver.get("https://example.com")
+
+# Находим элемент с нужным текстом
+element = driver.find_element(By.XPATH, '//p[contains(text(), "Ваш текст")]')
+Проверить наличие ссылки: После нахождения элемента проверьте, есть ли внутри него ссылка. Если да, 
+то вы можете нажать на эту ссылку, используя метод click().
+# Проверяем, есть ли внутри элемента ссылка
+if element.find_element(By.TAG_NAME, 'a'):
+ element.find_element(By.TAG_NAME, 'a').click()
+Обратите внимание, что этот код предполагает, что внутри элемента с нужным текстом есть только одна ссылка. 
+Если ссылок несколько, вам может потребоваться уточнить XPath для точного выбора нужной ссылки.
+
+
+
+'''
+
+
+
+
+# функция
+
 
 
 """
@@ -123,15 +170,17 @@ class Text_of_news():
 '''
 функции проверки
 '''
-def start(name_file):
-    File_log.__init__(File_log, name_file)
-def working(name_file):
-    File_log.get_name_file(File_log)
-    File_log.write_text_in_file(File_log, "gfdgdgdfgdfgdfg")
-    File_log.read_from_file(File_log)
+# def start(name_file):
+#     File_log.__init__(File_log, name_file)
+# def working(name_file):
+#     File_log.get_name_file(File_log)
+#     File_log.write_text_in_file(File_log, "gfdgdgdfgdfgdfg")
+#     File_log.read_from_file(File_log)
+#
+#
+# name_file = "CNN.txt"
+# start(name_file)
+# working(name_file)
+# working(name_file)
 
-
-name_file = "CNN.txt"
-start(name_file)
-working(name_file)
-working(name_file)
+Parsing_of_site.work_with_site(Parsing_of_site)
