@@ -84,14 +84,53 @@ class File_log():
 """
 
 class Parsing_of_site():
+    text_from_site = ''
 #     функция описывающая сам сайт
-    def work_with_site(self):
+#     это функция просто прочтения текста с сайта и возвращающая текст
+    def read_internet_page(self):
         url = "https://edition.cnn.com/politics/"
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
-        print(soup.title.text)
-        print(soup.find_all('span', 'container__headline-text'))
-        print(soup.find('span', 'container__headline-text'))
+        # print(soup.title.text)
+        self.text_from_site = soup('span', )
+        # эксперименты:
+        print(soup.title.string)
+
+
+        # return self.text_from_site
+        # print(self.text_from_site)
+        keywords = ['Trump']
+
+
+
+
+        print(soup.find_all(text=lambda text: any in keywords))
+                            # , 'span', 'container__headline-text'))
+        # print(soup.find('span', 'container__headline-text'))
+
+
+
+
+    '''
+    функция возвращающая значение текста изъятого с сайта
+    '''
+    def get_text_from_site(self):
+        return self.text_from_site
+
+    '''
+    функция устанавливающая новое значение
+    '''
+    def set_text_from_site(self, new_text):
+        self.text_from_site = new_text
+
+    def click_on_link(self):
+        pass
+
+    def find_my_text(self, list):
+        pass
+
+
+
 
 #     ищу в заголовках, если нахожу нужные упоминания перейти по ссылке открыть страницу и отуда вернуть аннотацию,
 # заголовок и автора и записать
@@ -183,4 +222,4 @@ class Text_of_news():
 # working(name_file)
 # working(name_file)
 
-Parsing_of_site.work_with_site(Parsing_of_site)
+Parsing_of_site.read_internet_page(Parsing_of_site)
