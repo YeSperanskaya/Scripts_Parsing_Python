@@ -105,8 +105,8 @@ class Parsing_of_site():
         new_annotation = soup.p.text
         new_author = soup.find('span', 'byline__name').text
         text_of_news = Text_of_news.__init___(Text_of_news, new_heading, new_annotation, new_author)
-        print(text_of_news.ready_information(text_of_news))
-        # print(text_of_news.ready_information(text_of_news))
+        return text_of_news.ready_information(text_of_news)
+
 
 
 
@@ -240,19 +240,21 @@ class Text_of_news():
 '''
 функции проверки
 '''
-# def start(name_file):
-#     File_log.__init__(File_log, name_file)
-# def working(name_file):
-#     File_log.get_name_file(File_log)
-#     File_log.write_text_in_file(File_log, "gfdgdgdfgdfgdfg")
-#     File_log.read_from_file(File_log)
+def start(name_file):
+    File_log.__init__(File_log, name_file)
+def working(name_file, text_for_write):
+    File_log.get_name_file(File_log)
+    File_log.write_text_in_file(File_log, text_for_write)
+    File_log.read_from_file(File_log)
 #
 #
-# name_file = "CNN.txt"
-# start(name_file)
-# working(name_file)
-# working(name_file)
+
 
 # Parsing_of_site.read_internet_page(Parsing_of_site)
 url = 'https://edition.cnn.com/2024/05/30/politics/bob-menendez-trial-nadine-texts/index.html'
-Parsing_of_site.read_news_internet_page(Parsing_of_site, url)
+text_for_write = Parsing_of_site.read_news_internet_page(Parsing_of_site, url)
+name_file = "CNN.txt"
+start(name_file)
+working(name_file, text_for_write)
+working(name_file, text_for_write)
+
