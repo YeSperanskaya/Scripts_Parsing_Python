@@ -87,15 +87,39 @@ class Parsing_of_site():
     text_from_site = ''
 #     функция описывающая сам сайт
 #     это функция просто прочтения текста с сайта и возвращающая текст
-    def read_internet_page(self):
+    def read_home_internet_page(self):
         url = "https://edition.cnn.com/politics/"
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
         # print(soup.title.text)
         self.text_from_site = soup('span', )
         # эксперименты:
-        print(soup.title.string)
+        print(soup.span)
 
+
+
+    def read_news_internet_page(self, url):
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        new_heading = soup.title.text
+        new_annotation = soup.p.text
+        new_author = soup.find('span', 'byline__name').text
+        text_of_news = Text_of_news.__init___(Text_of_news, new_heading, new_annotation, new_author)
+        print(text_of_news.ready_information(text_of_news))
+        # print(text_of_news.ready_information(text_of_news))
+
+
+
+
+        # print(soup.title.text)
+
+        # эксперименты:
+        # print(soup.span)
+
+        # я беру главную страницу с политикой нахожу там ссылку с нужным ключевым словов,
+        # автоматически переходит на страницу пор ссылке и там берет нужные данные
+        # берется остнвная страница на ней находится информация по ключевому слову
+        # если есть нужные слова переходит на страницу самой нововсти
 
         # return self.text_from_site
         # print(self.text_from_site)
@@ -181,6 +205,11 @@ class Text_of_news():
     """
     функции устанвливающие новые данные заголовка, аннотации статьи, автора
     """
+    def __init___(self, heading, annotation, author):
+        self.heading = "Heading: " + heading + '\n'
+        self.annotation = "Annotation: " + annotation + '\n'
+        self.author = "Author: " + author + '\n'
+        return self
 
     def set_heading(self, new_heading):
         self.heading = str("Heading: " + new_heading)
@@ -203,7 +232,9 @@ class Text_of_news():
     def get_author(self):
         return self.author
 
-
+    def ready_information(self):
+        text = self.get_heading(self) + self.get_annotation(self) + self.get_author(self)
+        return text
 
 
 '''
@@ -222,4 +253,6 @@ class Text_of_news():
 # working(name_file)
 # working(name_file)
 
-Parsing_of_site.read_internet_page(Parsing_of_site)
+# Parsing_of_site.read_internet_page(Parsing_of_site)
+url = 'https://edition.cnn.com/2024/05/30/politics/bob-menendez-trial-nadine-texts/index.html'
+Parsing_of_site.read_news_internet_page(Parsing_of_site, url)
