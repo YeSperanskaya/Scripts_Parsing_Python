@@ -12,7 +12,7 @@
 (если за 4 часа не нашлось - выбирайте другое новостное агенство)
 Возможно предоставление решения в виде публичной песочницы, например на https://repl.it
 """
-
+import datetime
 
 import requests
 from bs4 import BeautifulSoup
@@ -24,7 +24,6 @@ class File_log():
     '''
     функция создающая лог-файл (открывает и закрывает его)
     '''
-
     def __init__(self, name_file):
         self.name_file = name_file
         function_create = open(name_file, "w")
@@ -47,6 +46,10 @@ class File_log():
         else:
             write_in_file = open(self.name_file, "a")
             # добавить сюда что-то вроде внести запись информация записывается в такое-то время, такую-то дату
+            current_time = datetime.datetime.now().time()
+            current_time = str(current_time)
+            info = "News added in " + current_time
+            write_in_file.write(info + '\n')
             write_in_file.write(text + '\n')
             write_in_file.close()
             print("записала в файл")
