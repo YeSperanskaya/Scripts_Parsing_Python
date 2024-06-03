@@ -109,7 +109,7 @@ class Parsing_of_site():
         url_first_path = 'https://edition.cnn.com'
         for link in links:
             text = link.text
-            if "emocrat" in text or 'ecpublic' in text:
+            if "emocrat" in text or 'epublic' in text:
                 try:
                     adress = url_first_path + link.get('href')
                     print(adress)
