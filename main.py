@@ -17,10 +17,13 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import re
+
+
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
 
 
 class File_log():
@@ -95,35 +98,50 @@ class File_log():
 class Parsing_of_site():
     text_from_site = ''
 #     функция описывающая сам сайт
-#     это функция просто прочтения текста с сайта и возвращающая текст
+#     это функция просто прочтения текста с сайта и возвращающая массив из ссылок
     def read_home_internet_page(self):
         url = "https://edition.cnn.com/politics/"
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        # здесь будет запись всех ссылок какие есчть на странице
+        # здесь будет запись всех ссылок какие есть на странице
         links = soup.find_all('a')
+        array_links = []
         for link in links:
-            href = link.get('href')
-            self.read_news_internet_page(self, href)
+            array_links.append(link.get('href'))
+            print(array_links)
+        return array_links
+
+            # link = str(link)
+            # print(link)
+            # pattern = re.compile('href="(.+)"')
+            # match = pattern.search(link)
+            # print(match)
+
+            # adress = link
+            # href = link.get(link)
+            # self.read_news_internet_page(self, href)
 
 
 
     # заходим на старницу новую делаем две проверки:
     # есть ли нужные элементы на старнице
 
-    def examination_needs_element(self, url):
-        response = requests.get(url)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        driver = webdriver.Chrome()
-        driver.get(url)
-        try:
-            element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, 'p')))
-            print("Элемент p существует.")
-        except TimeoutException:
-            print("Элемент p не существует.")
-        driver.quit()
+    # def examination_needs_element(self, url):
+    #     response = requests.get(url)
+    #     soup = BeautifulSoup(response.content, 'html.parser')
+    #     driver = webdriver.Chrome()
+    #     driver.get(url)
+    #     try:
+    #         element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, 'p')))
+    #         print("Элемент p существует.")
+    #     except TimeoutException:
+    #         print("Элемент p не существует.")
+    #     driver.quit()
 
+    def examination_all_links(self, array):
+        for i in array:
+            Parsing_of_site.read_news_internet_page(Parsing_of_site, i)
 
 
     def read_news_internet_page(self, url):
@@ -285,5 +303,6 @@ def working(name_file, text_for_write):
 # start(name_file)
 # working(name_file, text_for_write)
 # working(name_file, text_for_write)
-Parsing_of_site.read_home_internet_page(Parsing_of_site)
+array_site = Parsing_of_site.read_home_internet_page(Parsing_of_site)
+Parsing_of_site.read_news_internet_page(Parsing_of_site, array_site)
 
