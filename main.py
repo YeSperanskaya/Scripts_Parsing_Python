@@ -109,9 +109,13 @@ class Parsing_of_site():
         for link in links:
             text = link.text
             if "emocrat" in text or 'ecpublic' in text:
-                adress = url_first_path + link.get('href')
-                print(adress)
-                print(Parsing_of_site.read_news_internet_page(Parsing_of_site, adress))
+                try:
+                    adress = url_first_path + link.get('href')
+                    print(adress)
+                    ready_text = (Parsing_of_site.read_news_internet_page(Parsing_of_site, adress))
+                    ready_text
+                except:
+                    print(f'Ошибка при извлечении новостей: {e}')
 
         # делаю просто наличие текста в спане
         # in_title = str(soup.find_all('span', class_='container__headline-text'))
@@ -188,13 +192,13 @@ class Parsing_of_site():
     #         print("Элемент p не существует.")
     #     driver.quit()
 
-    def examination_all_links(self, array):
-
-            for i in array:
-                try:
-                    Parsing_of_site.read_news_internet_page(Parsing_of_site, i)
-                except Exception as e:
-                        print(f'Ошибка при извлечении новостей: {e}')
+    # def examination_all_links(self, array):
+    #
+    #         for i in array:
+    #             try:
+    #                 Parsing_of_site.read_news_internet_page(Parsing_of_site, i)
+    #             except Exception as e:
+    #                     print(f'Ошибка при извлечении новостей: {e}')
 
 
 
@@ -366,8 +370,20 @@ def working(name_file, text_for_write):
 # array_site = Parsing_of_site.read_home_internet_page(Parsing_of_site)
 # text_news = Parsing_of_site.examination_all_links(Parsing_of_site, array_site)
 # working(name_file, text_news)
-test = ['Trump']
-keywords = ['democr', 'respubl', 'blocks', 'resident']
-Parsing_of_site.read_home_internet_page(Parsing_of_site)
+
+def constructor(name_file):
+    name_file = 'CNN.Politics.txt'
+    start(name_file)
+    bo = True
+    try:
+        while bo == True:
+            res = Parsing_of_site.read_home_internet_page(Parsing_of_site)
+            working(name_file, res)
+
+
+
+
+
+
 
 
