@@ -140,8 +140,13 @@ class Parsing_of_site():
     #     driver.quit()
 
     def examination_all_links(self, array):
-        for i in array:
-            Parsing_of_site.read_news_internet_page(Parsing_of_site, i)
+
+            for i in array:
+                try:
+                    Parsing_of_site.read_news_internet_page(Parsing_of_site, i)
+                except Exception as e:
+                        print(f'Ошибка при извлечении новостей: {e}')
+
 
 
     def read_news_internet_page(self, url):
@@ -299,10 +304,14 @@ def working(name_file, text_for_write):
 # Parsing_of_site.read_internet_page(Parsing_of_site)
 # url = 'https://edition.cnn.com/2024/05/30/politics/bob-menendez-trial-nadine-texts/index.html'
 # text_for_write = Parsing_of_site.read_news_internet_page(Parsing_of_site, url)
-# name_file = "CNN.txt"
+
 # start(name_file)
 # working(name_file, text_for_write)
 # working(name_file, text_for_write)
+name_file = 'Politics.txt'
+start(name_file)
 array_site = Parsing_of_site.read_home_internet_page(Parsing_of_site)
-Parsing_of_site.read_news_internet_page(Parsing_of_site, array_site)
+text_news = Parsing_of_site.examination_all_links(Parsing_of_site, array_site)
+working(name_file, text_news)
+
 
