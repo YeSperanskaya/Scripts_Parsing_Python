@@ -17,6 +17,12 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+
 class File_log():
     # переменная класса File_log обозначающая имя файла
     name_file = ""
@@ -94,10 +100,29 @@ class Parsing_of_site():
         url = "https://edition.cnn.com/politics/"
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
-        # print(soup.title.text)
-        self.text_from_site = soup('span', )
-        # эксперименты:
-        print(soup.span)
+
+        # здесь будет запись всех ссылок какие есчть на странице
+        links = soup.find_all('a')
+        for link in links:
+            href = link.get('href')
+            self.read_news_internet_page(self, href)
+
+
+
+    # заходим на старницу новую делаем две проверки:
+    # есть ли нужные элементы на старнице
+
+    def examination_needs_element(self, url):
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        driver = webdriver.Chrome()
+        driver.get(url)
+        try:
+            element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, 'p')))
+            print("Элемент p существует.")
+        except TimeoutException:
+            print("Элемент p не существует.")
+        driver.quit()
 
 
 
@@ -254,10 +279,11 @@ def working(name_file, text_for_write):
 
 
 # Parsing_of_site.read_internet_page(Parsing_of_site)
-url = 'https://edition.cnn.com/2024/05/30/politics/bob-menendez-trial-nadine-texts/index.html'
-text_for_write = Parsing_of_site.read_news_internet_page(Parsing_of_site, url)
-name_file = "CNN.txt"
-start(name_file)
-working(name_file, text_for_write)
-working(name_file, text_for_write)
+# url = 'https://edition.cnn.com/2024/05/30/politics/bob-menendez-trial-nadine-texts/index.html'
+# text_for_write = Parsing_of_site.read_news_internet_page(Parsing_of_site, url)
+# name_file = "CNN.txt"
+# start(name_file)
+# working(name_file, text_for_write)
+# working(name_file, text_for_write)
+Parsing_of_site.read_home_internet_page(Parsing_of_site)
 
