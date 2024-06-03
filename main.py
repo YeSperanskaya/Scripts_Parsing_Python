@@ -100,17 +100,66 @@ class Parsing_of_site():
 #     функция описывающая сам сайт
 #     это функция просто прочтения текста с сайта и возвращающая массив из ссылок
     def read_home_internet_page(self):
-        url = "https://edition.cnn.com/politics/"
+        url = "https://edition.cnn.com/politics"
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        # здесь будет запись всех ссылок какие есть на странице
         links = soup.find_all('a')
-        array_links = []
+        url_first_path = 'https://edition.cnn.com'
         for link in links:
-            array_links.append(link.get('href'))
-            print(array_links)
-        return array_links
+            text = link.text
+            if "emocrat" in text or 'ecpublic' in text:
+                adress = url_first_path + link.get('href')
+                print(adress)
+                print(Parsing_of_site.read_news_internet_page(Parsing_of_site, adress))
+
+        # делаю просто наличие текста в спане
+        # in_title = str(soup.find_all('span', class_='container__headline-text'))
+        # # print(in_title)
+        # separator = '>, '
+        # array = in_title.split(separator)
+        # # for keyword in keywords:
+        # #     # print('первая итерация')
+        # for text in array:
+        #     if "emocrat" in text or 'ecpublic' in text:
+        #         print(text) # текст в котором есть выделенные слова
+        #         if 'link' in text:
+        #             print("сработало")
+        #             link = text['link']
+        #             print(link)
+        #             response.get(link)
+        #             print(response.text)
+        #         else:
+        #             print("не сработало")
+
+
+            # нужна функция по которой идет переход по ссылке
+
+
+            # print("вторая итерация")
+            # if keyword in array:
+            #     print(text)
+                # else:
+                    # print(" не нашла ")
+        # if keyword in keywords in 'resident' in str(in_title):
+        #     print('нашла')
+        # for keyword in keywords:
+        #     if keyword in in_title:
+        #         print(keyword)
+        #     else:
+        #         print("не нашла")
+
+
+
+
+
+        # здесь будет запись всех ссылок какие есть на странице
+        # links = soup.find_all('a')
+        # array_links = []
+        # for link in links:
+        #     array_links.append(link.get('href'))
+        #     print(array_links)
+        # return array_links
 
             # link = str(link)
             # print(link)
@@ -150,13 +199,17 @@ class Parsing_of_site():
 
 
     def read_news_internet_page(self, url):
-        response = requests.get(url)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        new_heading = soup.title.text
-        new_annotation = soup.p.text
-        new_author = soup.find('span', 'byline__name').text
-        text_of_news = Text_of_news.__init___(Text_of_news, new_heading, new_annotation, new_author)
-        return text_of_news.ready_information(text_of_news)
+        try:
+            response = requests.get(url)
+            soup = BeautifulSoup(response.content, 'html.parser')
+            new_heading = soup.title.text
+            new_annotation = soup.p.text
+            new_author = soup.find('span', 'byline__name').text
+            text_of_news = Text_of_news.__init___(Text_of_news, new_heading, new_annotation, new_author)
+            return text_of_news.ready_information(text_of_news)
+        except Exception as e:
+            print(f'Ошибка при извлечении новостей: {e}')
+
 
 
 
@@ -174,13 +227,13 @@ class Parsing_of_site():
 
         # return self.text_from_site
         # print(self.text_from_site)
-        keywords = ['Trump']
-
-
-
-
-        print(soup.find_all(text=lambda text: any in keywords))
-                            # , 'span', 'container__headline-text'))
+        # keywords = ['Trump']
+        #
+        #
+        #
+        #
+        # print(soup.find_all(text=lambda text: any in keywords))
+        #                     # , 'span', 'container__headline-text'))
         # print(soup.find('span', 'container__headline-text'))
 
 
@@ -308,10 +361,13 @@ def working(name_file, text_for_write):
 # start(name_file)
 # working(name_file, text_for_write)
 # working(name_file, text_for_write)
-name_file = 'Politics.txt'
-start(name_file)
-array_site = Parsing_of_site.read_home_internet_page(Parsing_of_site)
-text_news = Parsing_of_site.examination_all_links(Parsing_of_site, array_site)
-working(name_file, text_news)
+# name_file = 'Politics.txt'
+# start(name_file)
+# array_site = Parsing_of_site.read_home_internet_page(Parsing_of_site)
+# text_news = Parsing_of_site.examination_all_links(Parsing_of_site, array_site)
+# working(name_file, text_news)
+test = ['Trump']
+keywords = ['democr', 'respubl', 'blocks', 'resident']
+Parsing_of_site.read_home_internet_page(Parsing_of_site)
 
 
