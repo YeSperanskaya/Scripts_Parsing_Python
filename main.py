@@ -99,7 +99,8 @@ class File_log():
 class Parsing_of_site():
     text_from_site = ''
 #     функция описывающая сам сайт
-#     это функция просто прочтения текста с сайта и возвращающая массив из ссылок
+#     Функция считывающая информацию с главной страницы сайта, ищет ключевые слова и при их нахождении
+    #     отправляетя по ссылке и формирует текст с помощью функции read_news_internet_page()
     def read_home_internet_page(self, name_file):
         url = "https://edition.cnn.com/politics"
         response = requests.get(url)
@@ -120,7 +121,8 @@ class Parsing_of_site():
 
 
 
-
+    # функция, которая считывает информацию со страницы, где именно упоминается новость и превращает
+    # в текст, который готов для записи в файл
     def read_news_internet_page(self, url):
         try:
             response = requests.get(url)
@@ -221,18 +223,18 @@ def working(name_file, text_for_write):
 #
 #
 
-
+# итоговая функция, которая объединяет функции класса для парсинга сайта, создания и записи в файл, а также времени
 def constructor(name_file):
-
-    start(name_file)
+    start(name_file) # создание файла с названием name_file в который будет записываться информация
     count = 0
-
-    while count <= 24:
+    while count <= 24: # 24 * 10 минут = 4 часа
         Parsing_of_site.read_home_internet_page(Parsing_of_site, name_file)
-        time.sleep(600)
+        time.sleep(600) # время ожидания до повторного запуска 600 секунд
         count += 1
 
 
+
+# переменная и команда запуска всей программы
 name_file = 'CNN.Politics.txt'
 constructor(name_file)
 
