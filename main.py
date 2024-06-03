@@ -13,6 +13,7 @@
 Возможно предоставление решения в виде публичной песочницы, например на https://repl.it
 """
 import datetime
+import time
 
 import requests
 from bs4 import BeautifulSoup
@@ -99,7 +100,7 @@ class Parsing_of_site():
     text_from_site = ''
 #     функция описывающая сам сайт
 #     это функция просто прочтения текста с сайта и возвращающая массив из ссылок
-    def read_home_internet_page(self):
+    def read_home_internet_page(self, name_file):
         url = "https://edition.cnn.com/politics"
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -113,92 +114,10 @@ class Parsing_of_site():
                     adress = url_first_path + link.get('href')
                     print(adress)
                     ready_text = (Parsing_of_site.read_news_internet_page(Parsing_of_site, adress))
-                    ready_text
-                except:
+                    working(name_file, ready_text)
+                except Exception as e:
                     print(f'Ошибка при извлечении новостей: {e}')
 
-        # делаю просто наличие текста в спане
-        # in_title = str(soup.find_all('span', class_='container__headline-text'))
-        # # print(in_title)
-        # separator = '>, '
-        # array = in_title.split(separator)
-        # # for keyword in keywords:
-        # #     # print('первая итерация')
-        # for text in array:
-        #     if "emocrat" in text or 'ecpublic' in text:
-        #         print(text) # текст в котором есть выделенные слова
-        #         if 'link' in text:
-        #             print("сработало")
-        #             link = text['link']
-        #             print(link)
-        #             response.get(link)
-        #             print(response.text)
-        #         else:
-        #             print("не сработало")
-
-
-            # нужна функция по которой идет переход по ссылке
-
-
-            # print("вторая итерация")
-            # if keyword in array:
-            #     print(text)
-                # else:
-                    # print(" не нашла ")
-        # if keyword in keywords in 'resident' in str(in_title):
-        #     print('нашла')
-        # for keyword in keywords:
-        #     if keyword in in_title:
-        #         print(keyword)
-        #     else:
-        #         print("не нашла")
-
-
-
-
-
-        # здесь будет запись всех ссылок какие есть на странице
-        # links = soup.find_all('a')
-        # array_links = []
-        # for link in links:
-        #     array_links.append(link.get('href'))
-        #     print(array_links)
-        # return array_links
-
-            # link = str(link)
-            # print(link)
-            # pattern = re.compile('href="(.+)"')
-            # match = pattern.search(link)
-            # print(match)
-
-            # adress = link
-            # href = link.get(link)
-            # self.read_news_internet_page(self, href)
-
-
-
-    # заходим на старницу новую делаем две проверки:
-    # есть ли нужные элементы на старнице
-
-    # def examination_needs_element(self, url):
-    #     response = requests.get(url)
-    #     soup = BeautifulSoup(response.content, 'html.parser')
-    #     driver = webdriver.Chrome()
-    #     driver.get(url)
-    #     try:
-    #         element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, 'p')))
-    #         print("Элемент p существует.")
-    #     except TimeoutException:
-    #         print("Элемент p не существует.")
-    #     driver.quit()
-
-    # def examination_all_links(self, array):
-    #
-    #         for i in array:
-    #             try:
-    #                 Parsing_of_site.read_news_internet_page(Parsing_of_site, i)
-    #             except Exception as e:
-    #                     print(f'Ошибка при извлечении новостей: {e}')
 
 
 
@@ -214,31 +133,6 @@ class Parsing_of_site():
         except Exception as e:
             print(f'Ошибка при извлечении новостей: {e}')
 
-
-
-
-
-
-        # print(soup.title.text)
-
-        # эксперименты:
-        # print(soup.span)
-
-        # я беру главную страницу с политикой нахожу там ссылку с нужным ключевым словов,
-        # автоматически переходит на страницу пор ссылке и там берет нужные данные
-        # берется остнвная страница на ней находится информация по ключевому слову
-        # если есть нужные слова переходит на страницу самой нововсти
-
-        # return self.text_from_site
-        # print(self.text_from_site)
-        # keywords = ['Trump']
-        #
-        #
-        #
-        #
-        # print(soup.find_all(text=lambda text: any in keywords))
-        #                     # , 'span', 'container__headline-text'))
-        # print(soup.find('span', 'container__headline-text'))
 
 
 
@@ -261,36 +155,6 @@ class Parsing_of_site():
     def find_my_text(self, list):
         pass
 
-
-
-
-#     ищу в заголовках, если нахожу нужные упоминания перейти по ссылке открыть страницу и отуда вернуть аннотацию,
-# заголовок и автора и записать
-
-'''
-Чтобы нажать на ссылку при нахождении нужного текста в Python с использованием Selenium, вам нужно выполнить следующие шаги:
-Открыть URL: Сначала откройте целевой URL, где находится нужный текст и ссылка. Это можно сделать с помощью метода driver.get().
-Найти элемент: Используйте метод find_element() для поиска элемента, содержащего нужный текст. Например, если это 
-текст внутри тега <p>, вы можете использовать следующий код:
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-
-driver = webdriver.Chrome()
-driver.get("https://example.com")
-
-# Находим элемент с нужным текстом
-element = driver.find_element(By.XPATH, '//p[contains(text(), "Ваш текст")]')
-Проверить наличие ссылки: После нахождения элемента проверьте, есть ли внутри него ссылка. Если да, 
-то вы можете нажать на эту ссылку, используя метод click().
-# Проверяем, есть ли внутри элемента ссылка
-if element.find_element(By.TAG_NAME, 'a'):
- element.find_element(By.TAG_NAME, 'a').click()
-Обратите внимание, что этот код предполагает, что внутри элемента с нужным текстом есть только одна ссылка. 
-Если ссылок несколько, вам может потребоваться уточнить XPath для точного выбора нужной ссылки.
-
-
-
-'''
 
 
 
@@ -372,13 +236,22 @@ def working(name_file, text_for_write):
 # working(name_file, text_news)
 
 def constructor(name_file):
-    name_file = 'CNN.Politics.txt'
+
     start(name_file)
-    bo = True
-    try:
-        while bo == True:
-            res = Parsing_of_site.read_home_internet_page(Parsing_of_site)
-            working(name_file, res)
+    count = 0
+
+    while count <= 24:
+        Parsing_of_site.read_home_internet_page(Parsing_of_site, name_file)
+        time.sleep(600)
+        count += 1
+
+
+name_file = 'CNN.Politics.txt'
+constructor(name_file)
+
+
+
+
 
 
 
